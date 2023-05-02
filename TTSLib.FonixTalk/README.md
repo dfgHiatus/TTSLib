@@ -1,0 +1,1 @@
+This project uses code from [SharpTalk](https://github.com/whatsecretproject/SharpTalk). All credit goes to the original authors.

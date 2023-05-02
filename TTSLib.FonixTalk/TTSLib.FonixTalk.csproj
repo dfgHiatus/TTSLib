@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="FonixTalk\**" />
+    <EmbeddedResource Remove="FonixTalk\**" />
+    <None Remove="FonixTalk\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="lib\FonixTalk.dll" />
+    <None Remove="lib\ftalk_us.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="lib\FonixTalk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\ftalk_us.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TTSLib.Module\TTSLib.Module.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="lib\ftalk_us.dic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(TargetDir)\$(TargetFileName)&quot; &quot;C:\Users\BenjaminEvans\AppData\Roaming\TTSLib&quot;" />
+  </Target>
+
+</Project>

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTSLib.Tests", "TTSLib.Tests.csproj", "{F5386DB1-2F2C-4518-ACE5-F5E4F4BAAC23}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTSLib.Loader", "..\TTSLib\TTSLib.Loader.csproj", "{6E195A7F-A147-4855-B80E-919A3CE29B65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTSLib.Module", "..\TTSLib.Module\TTSLib.Module.csproj", "{C699E780-C930-45B5-854B-00550451674E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTSLib.FonixTalk", "..\TTSLib.FonixTalk\TTSLib.FonixTalk.csproj", "{5D215D9C-CF73-419B-86E9-3502E50EF0B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5386DB1-2F2C-4518-ACE5-F5E4F4BAAC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5386DB1-2F2C-4518-ACE5-F5E4F4BAAC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5386DB1-2F2C-4518-ACE5-F5E4F4BAAC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5386DB1-2F2C-4518-ACE5-F5E4F4BAAC23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E195A7F-A147-4855-B80E-919A3CE29B65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E195A7F-A147-4855-B80E-919A3CE29B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E195A7F-A147-4855-B80E-919A3CE29B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E195A7F-A147-4855-B80E-919A3CE29B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C699E780-C930-45B5-854B-00550451674E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C699E780-C930-45B5-854B-00550451674E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C699E780-C930-45B5-854B-00550451674E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C699E780-C930-45B5-854B-00550451674E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D215D9C-CF73-419B-86E9-3502E50EF0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D215D9C-CF73-419B-86E9-3502E50EF0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D215D9C-CF73-419B-86E9-3502E50EF0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D215D9C-CF73-419B-86E9-3502E50EF0B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6A6F615-52FA-4179-8207-C0DFCA82572F}
+	EndGlobalSection
+EndGlobal

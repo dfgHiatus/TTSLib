@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<LangVersion>10</LangVersion>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="FonixTalk\**" />
+    <EmbeddedResource Remove="FonixTalk\**" />
+    <None Remove="FonixTalk\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TTSLib.Module\TTSLib.Module.csproj" />
+  </ItemGroup>
+
+</Project>
