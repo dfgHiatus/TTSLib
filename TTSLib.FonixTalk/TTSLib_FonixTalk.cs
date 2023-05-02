@@ -44,7 +44,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SynthesizeToFile(string text, string path, string fileName)
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
 
         var combinedPath = Path.Combine(path, fileName);
         fonix!.SpeakToWavFile(combinedPath, text);
@@ -54,7 +54,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool Teardown()
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
         fonix!.Dispose();
         IsReady = false;
         
@@ -63,7 +63,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool ChangeLanguage(CultureInfo culture)
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
         
         // TODO: Do we need to preserve the speaker params?
         var rate = fonix!.Rate;
@@ -87,7 +87,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SetSpeakingRate(int rate)
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
 
         fonix.Rate = (uint) rate;
 
@@ -96,7 +96,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SetGender(Gender gender)
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
         
         var sp = fonix.SpeakerParams;
         sp.Sex = gender == Gender.Male ? Sex.Male : Sex.Female;
@@ -107,7 +107,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SetVolume(float volume)
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
 
         var sp = fonix.SpeakerParams;
         sp.Loudness = (short) volume; // TODO: Figure out how to convert this
@@ -118,7 +118,7 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SynthesizeToDefaultAudioDevice(string text)
     {
-        if (!IsReady) return false;
+        // if (!IsReady) return false;
 
         fonix!.Speak(text);
 
