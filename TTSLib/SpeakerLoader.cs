@@ -101,7 +101,7 @@ public class SpeakerLoader
             return false;
         }
 
-        var dllFiles = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
+        var dllFiles = Directory.GetFiles(path, "*.dll", SearchOption.TopDirectoryOnly);
 
         foreach (var dllFile in dllFiles)
         {

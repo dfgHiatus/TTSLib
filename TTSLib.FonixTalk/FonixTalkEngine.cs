@@ -1,8 +1,5 @@
-﻿using System;
+﻿using System.Runtime.InteropServices;
 using System.Text;
-using System.IO;
-
-using System.Runtime.InteropServices;
 
 namespace SharpTalk
 {

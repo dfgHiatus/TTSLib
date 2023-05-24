@@ -51,11 +51,6 @@ public abstract class Speaker
     public abstract Dictionary<CultureInfo, string> SupportedLanguages { get; }
 
     /// <summary>
-    /// If the Speaker is in a functional state or not
-    /// </summary>
-    public bool IsReady;
-
-    /// <summary>
     /// Initializes the speaker. You should specify what operating systems and languages are supported here.
     /// </summary>
     /// <returns>If the initialization was successful</returns>
@@ -70,8 +65,6 @@ public abstract class Speaker
 
     public float[] SynthesizeFloats(string text)
     {
-        if (!IsReady) return Array.Empty<float>();
-
         byte[] audioBytes = SynthesizeBytes(text);
         float[] audioFloats = new float[audioBytes.Length / 2]; // Each sample is 2 bytes
         for (int i = 0; i < audioFloats.Length; i++)
@@ -156,7 +149,7 @@ public abstract class Speaker
     /// <param name="library"></param>
     /// <returns>True if the lib was extracted and loaded, false otherwise</returns>
     /// <exception cref="PlatformNotSupportedException"></exception>
-    public bool LoadWindowsLibrary(string library, Stream manifestResourceStream)
+    public bool LoadWindowsLibrary(string library, Stream manifestResourceStream, bool nonDLL = false)
     {
         if (Environment.OSVersion.Platform != PlatformID.Win32NT)
         {
@@ -188,7 +181,7 @@ public abstract class Speaker
                 }
             }
 
-            LoadLibrary(dllPath);
+            if (!nonDLL) LoadLibrary(dllPath);
             return true;
         }
         catch (Exception)

@@ -7,7 +7,7 @@ internal class Program
     static void Main(string[] args)
     {
         var speakerLoader = new SpeakerLoader();
-        if (!speakerLoader.Load("SAPI"))
+        if (!speakerLoader.Load("FonixTalk"))
         {
             Console.WriteLine("Failed to load module");
             return;

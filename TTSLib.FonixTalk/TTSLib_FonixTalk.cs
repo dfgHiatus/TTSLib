@@ -1,19 +1,17 @@
 ﻿using SharpTalk;
 using System.Globalization;
+using System.Reflection;
 using TTSLib.Module;
 
 namespace TTSLib.FonixTalk;
 
 public class TTSLib_FonixTalk : Speaker
 {
+    public override string FilePath => "FonixTalk";
     public override string Description => "FonixTalk TTS module";
-
     public override Version Version => new Version(1, 0, 0, 0);
-
     public override string Authors => "dfgHiatus";
-
     public override Uri Link => new Uri("https://github.com/dfgHiatus/TTSLib");
-
     public override HashSet<PlatformID> SupportedOperatingSystems => new() { PlatformID.Win32NT };
 
     public override Dictionary<CultureInfo, string> SupportedLanguages => new()
@@ -28,18 +26,29 @@ public class TTSLib_FonixTalk : Speaker
 
     private FonixTalkEngine fonix;
 
+    public TTSLib_FonixTalk()
+    {
+        LoadWindowsLibrary(
+            "ftalk_us.dll", 
+            Assembly.GetExecutingAssembly().GetManifestResourceStream("TTSLib.FonixTalk.lib.ftalk_us.dll"));
+        LoadWindowsLibrary(
+            "FonixTalk.dll", 
+            Assembly.GetExecutingAssembly().GetManifestResourceStream("TTSLib.FonixTalk.lib.FonixTalk.dll"));
+        LoadWindowsLibrary(
+            "ftalk_us.dic",
+            Assembly.GetExecutingAssembly().GetManifestResourceStream("TTSLib.FonixTalk.lib.ftalk_us.dic"),
+            nonDLL: true);
+    }
+
     public override bool Initialize()
     {
         fonix = new FonixTalkEngine();
-        IsReady = true;
         return true;
     }
 
     public override byte[] SynthesizeBytes(string text)
     {
-        if (!IsReady) return Array.Empty<byte>();
-
-        return fonix!.SpeakToMemory(text);
+        return fonix.SpeakToMemory(text);
     }
 
     public override bool SynthesizeToFile(string text, string path, string fileName)
@@ -47,29 +56,25 @@ public class TTSLib_FonixTalk : Speaker
         // if (!IsReady) return false;
 
         var combinedPath = Path.Combine(path, fileName);
-        fonix!.SpeakToWavFile(combinedPath, text);
+        fonix.SpeakToWavFile(combinedPath, text);
 
         return true;
     }
 
     public override bool Teardown()
     {
-        // if (!IsReady) return false;
-        fonix!.Dispose();
-        IsReady = false;
+        fonix.Dispose();
         
         return true;
     }
 
     public override bool ChangeLanguage(CultureInfo culture)
-    {
-        // if (!IsReady) return false;
-        
+    {  
         // TODO: Do we need to preserve the speaker params?
         var rate = fonix!.Rate;
         var voice = fonix!.Voice;
         var speakerParams = fonix!.SpeakerParams;
-        fonix!.Dispose();
+        fonix.Dispose();
 
         try
         {
@@ -87,8 +92,6 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SetSpeakingRate(int rate)
     {
-        // if (!IsReady) return false;
-
         fonix.Rate = (uint) rate;
 
         return true;
@@ -96,8 +99,6 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SetGender(Gender gender)
     {
-        // if (!IsReady) return false;
-        
         var sp = fonix.SpeakerParams;
         sp.Sex = gender == Gender.Male ? Sex.Male : Sex.Female;
         fonix.SpeakerParams = sp;
@@ -107,8 +108,6 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SetVolume(float volume)
     {
-        // if (!IsReady) return false;
-
         var sp = fonix.SpeakerParams;
         sp.Loudness = (short) volume; // TODO: Figure out how to convert this
         fonix.SpeakerParams = sp;
@@ -118,8 +117,6 @@ public class TTSLib_FonixTalk : Speaker
 
     public override bool SynthesizeToDefaultAudioDevice(string text)
     {
-        // if (!IsReady) return false;
-
         fonix!.Speak(text);
 
         return true;

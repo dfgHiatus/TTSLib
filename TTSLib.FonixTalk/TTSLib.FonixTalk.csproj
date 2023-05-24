@@ -17,26 +17,24 @@
 
   <ItemGroup>
     <None Remove="lib\FonixTalk.dll" />
+    <None Remove="lib\ftalk_us.dic" />
     <None Remove="lib\ftalk_us.dll" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="lib\FonixTalk.dll">
+    <EmbeddedResource Include="lib\FonixTalk.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\ftalk_us.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="lib\ftalk_us.dic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lib\ftalk_us.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TTSLib.Module\TTSLib.Module.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="lib\ftalk_us.dic">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
