@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
 using TTSLib.Module;
 
@@ -9,7 +11,19 @@ namespace TTSLib.SAPI;
 /// </summary>
 public class SapiSpeaker : Speaker
 {
+    public SapiSpeaker()
+    {
+        LoadWindowsLibrary(
+            "System.Speech.dll", 
+            Assembly.GetExecutingAssembly().GetManifestResourceStream("TTSLib.SAPI.System.Speech.dll"));
+    }
+
     private SpeechSynthesizer synthesizer;
+
+    /// <summary>
+    /// Module name
+    /// </summary>
+    public override string FilePath => "SAPI";
 
     /// <summary>
     /// Module description

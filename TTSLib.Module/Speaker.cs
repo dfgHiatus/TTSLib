@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace TTSLib.Module;
 
@@ -7,6 +8,11 @@ namespace TTSLib.Module;
 /// </summary>
 public abstract class Speaker
 {
+    /// <summary>
+    /// Defines the name of where the module is stored. This is used to determine where to load the module from
+    /// </summary>
+    public abstract string FilePath { get; }
+
     /// <summary>
     /// Module description
     /// </summary>
@@ -123,7 +129,6 @@ public abstract class Speaker
     /// <returns>True if the speaking rate was successfully set, false otherwise.</returns>
     public abstract bool SetSpeakingRate(int rate);
 
-
     /// <summary>
     /// Sets the pitch of the current speaker
     /// </summary>
@@ -144,6 +149,58 @@ public abstract class Speaker
     /// <param name="accent">The new accent to set.</param>
     /// <returns>True if the accent was successfully set, false otherwise.</returns>
     public abstract bool SetAccent(string accent);
+
+    /// <summary>
+    /// Loads a Windows specific DLL from the embedded resources and extracts it to the user's AppData folder
+    /// </summary>
+    /// <param name="library"></param>
+    /// <returns>True if the lib was extracted and loaded, false otherwise</returns>
+    /// <exception cref="PlatformNotSupportedException"></exception>
+    public bool LoadWindowsLibrary(string library, Stream manifestResourceStream)
+    {
+        if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+        {
+            throw new PlatformNotSupportedException("This operation is only supported on Windows");
+        }
+
+        // Extract the Embedded DLL
+        var dirName = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "TTSLib",
+            FilePath);
+
+        var dllPath = Path.Combine(dirName, library);
+
+        // TODO embed this in this assembly
+        try
+        {
+            using (Stream outFile = File.Create(dllPath))
+            {
+                const int sz = 4096;
+                var buf = new byte[sz];
+                while (true)
+                {
+                    if (manifestResourceStream == null) continue;
+                    var nRead = manifestResourceStream.Read(buf, 0, sz);
+                    if (nRead < 1)
+                        break;
+                    outFile.Write(buf, 0, nRead);
+                }
+            }
+
+            LoadLibrary(dllPath);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        } 
+    }
+
+#if OS_WINDOWS
+    [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
+    private static extern IntPtr LoadLibrary(string lpFileName);
+#endif
 
     /// <summary>
     /// Stops the individual speaker and frees all resources associates with it

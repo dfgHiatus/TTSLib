@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.Loader;
 using TTSLib.Module;
 
 namespace TTSLib.ModuleLoader;
@@ -57,11 +56,15 @@ public class SpeakerLoader
                 {
                     try
                     {
-                        var speaker = Activator.CreateInstance(type) as Speaker;
+                        var speakerInstance = Activator.CreateInstance(type) as Speaker;
 
-                        if (speaker.SupportedOperatingSystems.Contains(Environment.OSVersion.Platform))
+                        if (speakerInstance.SupportedOperatingSystems.Contains(Environment.OSVersion.Platform))
                         {
-                            return speaker.Initialize();
+                            if (speakerInstance.Initialize())
+                            {
+                                speaker = speakerInstance;
+                                return true;
+                            }
                         }
                     }
                     catch (Exception e)
@@ -94,6 +97,7 @@ public class SpeakerLoader
 
         if (!Directory.Exists(path))
         {
+            Directory.CreateDirectory(path);
             return false;
         }
 
@@ -111,11 +115,15 @@ public class SpeakerLoader
                 {
                     try
                     {
-                        var speaker = Activator.CreateInstance(type) as Speaker;
+                        var speakerInstance = Activator.CreateInstance(type) as Speaker;
 
-                        if (speaker.SupportedOperatingSystems.Contains(Environment.OSVersion.Platform))
+                        if (speakerInstance.SupportedOperatingSystems.Contains(Environment.OSVersion.Platform))
                         {
-                            return speaker.Initialize();
+                            if (speakerInstance.Initialize())
+                            {
+                                speaker = speakerInstance;
+                                return true;
+                            }
                         }
                     }
                     catch (BadImageFormatException) { } // Ignore unmanaged file errors

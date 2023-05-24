@@ -7,11 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="System.Speech.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="System.Speech.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TTSLib.Module\TTSLib.Module.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(TargetDir)\$(TargetFileName)&quot; &quot;C:\Users\BenjaminEvans\AppData\Roaming\TTSLib\SAPI&quot;" />
+  </Target>
 
 </Project>
